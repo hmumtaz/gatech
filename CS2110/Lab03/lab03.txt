@@ -1,0 +1,53 @@
+#=========================#
+ CS2110 Summer 2016 Lab #3
+#=========================#
+
+This lab consists of 2 parts, all contained in lab4.circ, which is the only file you
+need to submit. The different parts are implemented in sub-circuits, which can be chosen
+by double-clicking them in the upper-left part of Logisim.
+
+1. DeMorgan's Law
+
+	Bill has already alluded to this in lecture, but here's something cool.
+	There is a property of boolean logic called DeMorgan's Law that states:
+
+	"The negation of a conjunction is the disjunction of the negations."
+
+	Or, simply put,
+
+	!(A && B) == (!A || !B)
+
+	For the first part of this assignment, you will be building a simple circuit to
+	demonstrate this principle.
+
+	In the template we have provided, fill in the missing logic gates and connect the
+	tunnels to the inputs.
+
+	For the first gate, use an AND gate and invert the output (see the left side of
+	the equation above).
+	For the second gate, use an OR gate and invert the inputs (see the right side of
+	the equation above).
+
+	You will notice the outputs for both gates are the same.
+
+	This is DeMorgan's law in action.
+
+2. Transistors
+
+	Fill in the provided template circuits NAND and NOT with transistors (found under Wiring section) to create
+	the specified logic gates.
+
+	There is only one stipulation, and that is you MUST follow this convention:
+
+	P-type transistors go on TOP of the diagram, connected to power
+	N-type transistors go on BOTTOM, connected to ground.
+
+	When you are finished with NAND and NOT, use the completed subcircuits to finish
+	the AND subcircuit. Double-click the AND subcircuit to edit it, then single-
+	click the NAND or NOT subcircuit to select it as a component and use it to
+	implement the AND gate.
+
+	If you have any questions, ask away!
+
+When you're done, submit your lab4.circ file to t-square.
+

@@ -1,0 +1,13 @@
+{
+	"path": {
+		"graphics": {
+			"town": "graphics/town",
+			"map": "graphics/map",
+			"generic": "graphics"
+		},
+		"config": {
+			"initial": "config.json"
+		}
+	}
+}
+

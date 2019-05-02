@@ -1,0 +1,77 @@
+#===========================#
+# CS2110 Summer 2016 Lab #6 #
+#===========================#
+
+This lab consists of 4 parts which build upon each other. For each part, you will be
+constructing a subcircuit that will be used for the next part.
+
+The goal of this lab is to build a working, edge-triggered register. The register is just
+an array of D flip-flops. The D flip-flop is constructed from gated D latches. Then, the
+gated D latch uses an RS latch to store a single bit.
+
+When you are finished, submit the file to T-Square.
+
+Part 1: RS latch
+
+	Construct an RS latch using the template subcircuit provided. 
+
+	S:	Set. This input and R should be held high (1) when not in use. To set the
+		value held by the RS latch to 1, change S to 0, then 1 again.
+
+	R:	Reset. This input and S should be held high (1) when not in use. To reset
+		the value held by the RS latch to 0, change R to 0, then 1 again.
+
+	Q:	Output. This displays the value held by the RS latch.
+
+Part 2: Gated D latch
+
+	Use the RS latch as a subcircuit to complete the gated D latch.
+
+	D:	Data in. This is the value being written to the gated D latch. If the
+		value of WE is 1, then the value of Q should update to whatever D is
+		immediately, because the gated D latch is a level-triggered device.
+
+	WE:	Write enable. When this is high, the value of D is written to the gated D
+		latch. When this is low, the gated D latch's value is maintained despite
+		the value of D.
+
+	Q:	Output. This displays the value held by the gated D latch.
+
+Part 3: D flip-flop
+
+	Use 2 of the gated D latch subcircuits to complete the D flip-flop. Recall that
+	D flip-flops are an enhancement to gated D latches that makes them into an edge-
+	triggered device. You can find an example D flip-flop design here:
+
+	https://students.cs.byu.edu/~cs224ta/labs/L02-fsm/HowToUseMasterSlave.php
+
+	Note that their low-level design for the gated D latch component is different
+	from the one covered in lecture, but both work.
+
+	D:	Data in. This is the value being written to the D flip-flop. The value of
+		Q should update to whatever D is when WE is changed from 0 to 1 (rising
+		edge).
+
+	WE:	Write enable. When this is high, the value of D is written to the D flip-
+		flop on the rising edge of the clock. When this is low, the value of the
+		D flip-flop is maintained, regardless of D's value.
+
+	Q:	Output. This displays the value held by the D flip-flop.
+
+Part 4: Register
+
+	Use four of the D flip-flops you constructed to make a 4-bit, edge-triggered
+	register. Augment the standard rising edge write enable of the D flip-flops to
+	also update only if write enable is high.
+
+	D:	Data in. This is the value being written to the register. If the value of
+		WE is 1, then the value of Q should update to whatever D is only when CLK
+		changes from 0 to 1 (rising edge).
+
+	WE:	Write enable. When this is high, allow writing data to the register. When
+		low, maintain the current value of the register.
+
+	CLK:	Clock. When the clock goes from 0 to 1, update the register contents if
+		WE is high.
+
+	Q:	Output. This displays the value held by the register.

@@ -1,0 +1,82 @@
+; ==========================
+; CS2110 Lab 11 Summer 2016
+; Name: HUSSAIN MUMTAZ
+; ==========================
+
+.orig x40
+
+	.fill x5000
+
+.end
+
+.orig x3000
+
+	AND R0, R0, 0
+	ADD R0, R0, 1
+	ADD R1, R0, 1
+	ADD R2, R0, 2
+	ADD R3, R0, 3
+	ADD R4, R0, 4
+	ADD R5, R0, 5
+	ADD R6, R0, 6
+
+	TRAP x40
+
+	HALT ; After halting, the registers should still contain 1, 2, 3, 4, 5, 6, 7.
+
+.end
+
+.orig x5000
+
+		ST R0, SAVER0	;SAVE REGISTERS
+		ST R1, SAVER1
+		ST R2, SAVER2
+		ST R7, SAVER7
+
+		LEA R1, BUFFER	;LOAD BUFFER ADDRESS
+	
+LOOP	GETC			;CHECK TERMINATION CONDITION
+		ADD R2, R0, -10
+		BRnp CASE
+		BRz END
+		
+CASE	LD R2, ASCIIA	;CHECK CASE
+		NOT R2, R2
+		ADD R2, R2, 1
+		ADD R2, R2, R0
+		BRN TOBUFR
+
+		LD R2, ASCIIZ
+		NOT R2, R2
+		ADD R2, R2, 1
+		ADD R2, R2, R0
+		BRP TOBUFR
+
+		ADD R0, R0, 15	;IF CASE IS CAPS, MAKE LOWERCASE
+		ADD R0, R0, 15
+		ADD R0, R0, 2
+
+
+TOBUFR	STR R0, R1, 0	;ADD CHAR TO BUFFER
+		ADD R1, R1, 1
+		BR LOOP
+
+END		LEA R0, BUFFER	;PRINT TO CONSOLE
+		PUTS
+		LD R0, SAVER0	;RESTORE ADDRESSES
+		LD R2, SAVER2
+		LD R1, SAVER1
+		LD R7, SAVER7
+		RET
+
+BUFFER
+	.blkw 30
+
+SAVER0 .FILL 0
+SAVER1 .FILL 0
+SAVER2 .FILL 0
+SAVER7 .FILL 0
+ASCIIA .FILL 65
+ASCIIZ .FILL 90
+
+.end

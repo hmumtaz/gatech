@@ -1,0 +1,79 @@
+======================================================================
+CS2110                        Lab 11                       Summer 2016
+======================================================================
+ 
+Objective: Learning how to code a simple trap in LC-3 Assembly.
+ 
+Try to collaborate with your classmates if you're stuck, and don'thesitate to
+ask the TA's for help. If you are stuck on one part, or not clear about what
+it's asking, feel free to ask. Remember, we are here to help you :)
+
+In this lab, you're going to be writing a trap!
+
+BE SURE TO ENABLE TRUE TRAPS IN COMPLX BEFORE YOU RUN YOUR CODE.
+
+Trap Introduction
+-----------------
+
+Traps are subroutines that you can call using the TRAP instruction. PUTS, GETC,
+OUT, and HALT are all examples of pseudo-ops that assemble to TRAP instructions.
+They work using the Trap Vector Table. 
+
+The Trap Vector Table is an area in memory (x0000 - x00FF) that contains the
+addresses of where the data of the trap subroutines are located in memory. For
+example, if the code for trap x50 was located at address x5000 in memory, the
+corresponding entry in the trap vector table (x50) will contain the value x5000.
+When the instruction 'TRAP x50' is executed, the current PC is saved to register
+R7, the computer looks up where trap x50 is located (x5000), the pc is changed
+to that value (x5000), the trap executes, and finally, after the trap is done
+executing, the pc is changed back to the original value (the one initially
+stored in R7).
+
+Problem
+-------
+Implement a TRAP that takes in input from the user and echoes it back to them in
+lowercase.
+
+For instance if they type HELLO WORLD! you should echo back hello world!
+
+Specifications
+--------------
+This trap should be callable by saying TRAP x40 in your code.
+No registers (except R7) should be modified.
+It shouldn't print anything until the user presses enter.
+
+Pseudocode
+----------
+void lowertrap() {
+	char c;
+	char buffer[30];
+	char *buf = buffer;
+	do {
+		c = getchar();
+		if(c == '\n') {
+			c = 0;
+		}
+		if(c >= 'A' && c <= 'Z') {
+			c += 32;
+		}
+		buf[0] = c;
+		buf++;
+	} while(c != 0);
+	printf(buffer);
+}
+
+Hints
+-----
+If you see "Warning at 0x3007: Unsupported Trap x40." Then enable true traps
+from State > True Traps (or just ctrl+T).
+
+Yes, it's normal that your program is halting at address 0x054A. By enabling
+true traps, the actual trap code gets processed by complx, and this is the
+location where the processor stops in the HALT trap.
+
+GETC can be used to read a character.
+
+Don't forget that calling a trap within a trap will clobber R7!
+
+The line "char *buf = buffer" declares a variable buf that holds the address of
+buffer.

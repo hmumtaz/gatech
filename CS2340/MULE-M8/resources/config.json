@@ -1,0 +1,31 @@
+{
+	"general":
+	{
+		"players":
+		{
+			"num": 2
+		}
+	},
+	"player": {
+		"0": {
+			"name": "Player 1",
+			"race": 1,
+			"color": "Green"
+		},
+		"1": {
+			"name": "Player 2",
+			"race": 2,
+			"color": "Orange"
+		},
+		"2": {
+			"name": "Player 3",
+			"race": 3,
+			"color": "Blue"
+		},
+		"3": {
+			"name": "Player 4",
+			"race": 4,
+			"color": "Purple"
+		}
+	}
+}
