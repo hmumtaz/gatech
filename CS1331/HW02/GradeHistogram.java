@@ -1,57 +1,83 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class GradeHistogram {
-    public static void main(String[] args) throws Exception {
-        Scanner scan = new Scanner(new File(args[0]));
-        int bucket;
+    static final int MAX_NUM_BINS = 101;
+
+    public static void main(String[] args) throws FileNotFoundException {
+        String fileName;
         try {
-            bucket = Integer.parseInt(args[1]);
-        } catch (IndexOutOfBoundsException e) {
+            fileName = args[0];
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("ERROR: File Name must be specified");
+            return;
+        }
+
+        int num_bins;
+        try {
+            num_bins = Integer.parseInt(args[1]);
+        } catch (ArrayIndexOutOfBoundsException ex) {
             Scanner keyboard = new Scanner(System.in);
-            System.out.println("What bucket size would you like?");
-            bucket = keyboard.nextInt();
-        }
-
-        String fullText = "";
-        while (scan.hasNextLine()) {
-            fullText = fullText + "   " + scan.nextLine();
-        }
-
-        String[] lines = fullText.split("   ");
-
-        String[] sep;
-        String grade = "";
-        int[] grades = new int[lines.length - 1];
-
-        //Starting index with 1 because lines[0] is blank
-        int i = 1;
-        while (i < lines.length) {
-            sep = lines[i].split(",");
-            grade = sep[1];
-            grades[i - 1] = Integer.parseInt(grade.trim());
-            i = i + 1;
-        }
-
-        String brackets = "";
-        int decrement = 100;
-        while (decrement > 0) {
-            for (int j = 0; j < grades.length; j = j + 1) {
-                if (grades[j] <= decrement && grades[j] >= (decrement
-                    - bucket)) {
-                    brackets = brackets + "[]";
-                }
+            System.out.println("An integer must be specified for number of bins to create. Please specify an integer:");
+            try {
+                num_bins = keyboard.nextInt();
+                keyboard.close();
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: An integer value was not provided");
+                return;
             }
-            decrement = decrement - bucket;
-            if (decrement < 0) {
-                System.out.printf("%-3d - %-3d  | %-1s \n",
-                    0, (decrement + bucket), brackets);
-                brackets = "";
+
+        }
+
+        StringBuilder[] bins = createHistogram(fileName, num_bins);
+
+        for (int i = bins.length - 1; i >= 0; i--) {
+            System.out.println(bins[i].toString());
+        }
+    }
+
+    public static StringBuilder[] createHistogram(String file_name, int num_bins)
+            throws FileNotFoundException {
+        if (num_bins > MAX_NUM_BINS || num_bins < 1) {
+            throw new IndexOutOfBoundsException(
+                    "You cannot have more than one-hundred or less than one bin");
+        }
+        int bin_size = MAX_NUM_BINS / num_bins;
+        int extras = MAX_NUM_BINS % num_bins;
+        StringBuilder[] bins = createBins(num_bins, bin_size, extras);
+
+        Scanner grade_file = new Scanner(new File(file_name));
+        while (grade_file.hasNext()) {
+            String line = grade_file.nextLine();
+            int grade = Integer.parseInt(line.split(",")[1].strip());
+
+            int bin_for_grade;
+            if (grade < extras + bin_size) {
+                bin_for_grade = 0;
             } else {
-                System.out.printf("%-3d - %-3d  | %-1s \n",
-                    (decrement + bucket), decrement, brackets);
-                brackets = "";
+                bin_for_grade = ((grade - extras) / bin_size);
             }
+            bins[bin_for_grade].append("[]");
         }
+
+        return bins;
+    }
+
+    public static StringBuilder[] createBins(int num_bins, int bin_size, int extras) {
+        int start = 0;
+        int end = bin_size - 1 + extras;
+        StringBuilder[] bins = new StringBuilder[num_bins];
+        for (int i = 0; i < num_bins; i++) {
+            bins[i] = new StringBuilder()
+                    .append(String.format("%3s", Integer.toString(end)))
+                    .append(" - ")
+                    .append(String.format("%3s", Integer.toString(start)))
+                    .append(" | ");
+            start = end + 1;
+            end += bin_size;
+        }
+        return bins;
     }
 }
