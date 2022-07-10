@@ -1,9 +1,5 @@
 /**
- * Node class used for implementing your SinglyLinkedList.
- *
- * DO NOT ALTER THIS FILE!!
- *
- * @author CS 1332 TAs
+ * LinkedListNode
  */
 public class LinkedListNode<T> {
 
@@ -14,7 +10,7 @@ public class LinkedListNode<T> {
      * Create a new LinkedListNode with the given data object and next node.
      *
      * @param data data to store in the node
-     * @param next next node
+     * @param next refrence to next node
      */
     public LinkedListNode(T data, LinkedListNode<T> next) {
         this.data = data;
@@ -22,7 +18,7 @@ public class LinkedListNode<T> {
     }
 
     /**
-     * Create a new LinkedListNode with the given data object and no next node.
+     * Create a new LinkedListNode with the given data object.
      *
      * @param data data to store in this node
      */
@@ -31,7 +27,7 @@ public class LinkedListNode<T> {
     }
 
     /**
-     * Get the data stored in the node.
+     * Get node data
      *
      * @return data in this node.
      */
@@ -40,7 +36,7 @@ public class LinkedListNode<T> {
     }
 
     /**
-     * Get the next node.
+     * Get next node.
      *
      * @return next node.
      */
@@ -49,7 +45,7 @@ public class LinkedListNode<T> {
     }
 
     /**
-     * Set the next node.
+     * Set next node.
      *
      * @param next new next node.
      */

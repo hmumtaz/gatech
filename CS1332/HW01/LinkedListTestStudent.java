@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.NoSuchElementException;
+
 public class LinkedListTestStudent {
 
     private LinkedListInterface<String> list;
@@ -273,7 +275,7 @@ public class LinkedListTestStudent {
         assertEquals(3, list.size());
         assertEquals("3a", list.removeFromFront()); // 4a 5a
         assertEquals(2, list.size());
-        assertEquals("4a", list.rremoveFromFront()); // 5a
+        assertEquals("4a", list.removeFromFront()); // 5a
         assertEquals(1, list.size());
         assertEquals("5a", list.removeFromFront());
         assertEquals(0, list.size());
@@ -285,7 +287,7 @@ public class LinkedListTestStudent {
     @Test
     public void testRemoveAtFrontKeepsReturningNull() {
         assertEquals(0, list.size());
-        for (int i; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             assertEquals(null, list.removeFromFront());
         }
     }
@@ -323,7 +325,7 @@ public class LinkedListTestStudent {
     @Test
     public void testRemoveAtBackKeepsReturningNull() {
         assertEquals(0, list.size());
-        for (int i; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             assertEquals(null, list.removeFromBack());
         }
     }
@@ -341,7 +343,7 @@ public class LinkedListTestStudent {
         assertEquals(1, list.removeFirstOccurrence("1a")); // 0a 0a 1a 0a 1a
         assertEquals(5, list.size());
 
-        LinkedListNode current = list.getHead();
+        LinkedListNode<String> current = list.getHead();
         assertNotNull(current);
         assertEquals("0a", current.getData());
         current = current.getNext();
@@ -433,7 +435,7 @@ public class LinkedListTestStudent {
         list.clear();
         assertEquals(true, list.isEmpty());
         assertEquals(0, list.size());
-        LinkedListNode current = list.getHead();
+        LinkedListNode<String> current = list.getHead();
         assertEquals(null, current);
 
     }

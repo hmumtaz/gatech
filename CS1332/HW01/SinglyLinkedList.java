@@ -25,11 +25,11 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
 
     @Override
     public void addAtIndex(int index, T data) throws IndexOutOfBoundsException,
-        IllegalArgumentException {
+            IllegalArgumentException {
         if (data == null) {
             throw new IllegalArgumentException();
         } else if (index == size) {
-            addToBack(data); //method increments size
+            addToBack(data); // method increments size
         } else if (index > size || index < 0) {
             throw new IndexOutOfBoundsException();
         } else {
@@ -81,7 +81,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         } else if (index == 0) {
-            return removeFromFront(); //removeFromFront decrements size
+            return removeFromFront(); // removeFromFront decrements size
         } else {
             LinkedListNode<T> current = head;
             int curIdx = 1;
@@ -142,14 +142,14 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
 
     @Override
     public int removeFirstOccurrence(T data) throws NoSuchElementException,
-        IllegalArgumentException {
+            IllegalArgumentException {
         int curIdx = 0;
         if (data == null) {
             throw new IllegalArgumentException();
         } else if (curIdx == size) {
             throw new NoSuchElementException();
         } else if (data == head.getData()) {
-            removeFromFront(); //method decrements size
+            removeFromFront(); // method decrements size
             return 0;
         } else {
             LinkedListNode<T> previous = head;
@@ -157,6 +157,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             while (curIdx < size) {
                 if (current.getData() == data) {
                     previous.setNext(current.getNext());
+                    size--;
                     return (curIdx + 1);
                 } else {
                     previous = previous.getNext();
